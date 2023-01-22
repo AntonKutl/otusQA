@@ -38,14 +38,11 @@ public class MainPage extends AnyPageAbs<MainPage> {
         return this;
     }
 
-    public MainPage clickEarlierItemMenu() {
-        LocalDate min = getDateList().stream()
-                .min(Comparator.naturalOrder())
-                .get();
+    public MainPage clickItemMenuDate(Func func) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM", new Locale("ru"));
 
-        List<WebElement> menuItemElement = driver.findElements(By.xpath(String.format(menuItemDateLocator, min.format(formatter))));
+        List<WebElement> menuItemElement = driver.findElements(By.xpath(String.format(menuItemDateLocator, func.getFunc().format(formatter))));
 
         WebElement webElement = menuItemElement.stream()
                 .reduce((first, second) -> second)
@@ -58,27 +55,7 @@ public class MainPage extends AnyPageAbs<MainPage> {
         return this;
     }
 
-    public MainPage clickLaterItemMenu() {
-        LocalDate min = getDateList().stream()
-                .max(Comparator.naturalOrder())
-                .get();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM", Locale.ENGLISH);
-
-        List<WebElement> menuItemElement = driver.findElements(By.xpath(String.format(menuItemDateLocator, min.format(formatter))));
-
-        WebElement webElement = menuItemElement.stream()
-                .reduce((first, second) -> second)
-                .get();
-
-        new Actions(driver)
-                .click(webElement)
-                .perform();
-
-        return this;
-    }
-
-    private List<LocalDate> getDateList() {
+    public List<LocalDate> getDateList() {
         List<LocalDate> dateList = new ArrayList<>();
 
         List<List<String>> datesStringList = dateItem.stream()
@@ -107,8 +84,8 @@ public class MainPage extends AnyPageAbs<MainPage> {
 
             String dateInString = dateStringList.get(0) + " " + dateStringList.get(1) + " " + dateStringList.get(2);
 
-            if (Pattern.compile("\\d+ \\w+ \\d{4}").matcher(dateInString).find()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
+            if (Pattern.compile("\\d+ [а-я]+ \\d{4}").matcher(dateInString).find()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
                 dateList.add(LocalDate.parse(dateInString, formatter));
             }
         }

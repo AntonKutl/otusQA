@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 
+import java.util.Comparator;
+
 @ExtendWith(UIExtension.class)
 public class HomeWorkOneTest {
 
@@ -21,10 +23,18 @@ public class HomeWorkOneTest {
 
         mainPage.navigationBack();
 
-        mainPage.clickEarlierItemMenu();
+        mainPage.clickItemMenuDate(() ->
+                mainPage.getDateList()
+                        .stream()
+                        .min(Comparator.naturalOrder())
+                        .get());
 
         mainPage.navigationBack();
 
-        mainPage.clickLaterItemMenu();
+        mainPage.clickItemMenuDate(() ->
+                mainPage.getDateList()
+                        .stream()
+                        .max(Comparator.naturalOrder())
+                        .get());
     }
 }
