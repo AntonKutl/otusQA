@@ -9,19 +9,19 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class OperaWebDriver implements IDriver {
 
-    @Override
-    public WebDriver newDriver() {
-        OperaOptions chromeOptions = new OperaOptions();
+  @Override
+  public WebDriver newDriver() {
+    OperaOptions chromeOptions = new OperaOptions();
 
-        if (getRemoteUrl() == null) {
-            try {
-                downloadLocalWebDriver(DriverManagerType.OPERA);
-            } catch (DriverTypeNotSupported ex) {
-                ex.printStackTrace();
-            }
+    if (getRemoteUrl() == null) {
+      try {
+        downloadLocalWebDriver(DriverManagerType.OPERA);
+      } catch (DriverTypeNotSupported ex) {
+        ex.printStackTrace();
+      }
 
-            return new OperaDriver(chromeOptions);
-        } else
-            return new RemoteWebDriver(getRemoteUrl(), chromeOptions);
-    }
+      return new OperaDriver(chromeOptions);
+    } else
+      return new RemoteWebDriver(getRemoteUrl(), chromeOptions);
+  }
 }

@@ -12,29 +12,29 @@ import java.util.Comparator;
 @ExtendWith(UIExtension.class)
 public class HomeWorkOneTest {
 
-    @Driver
-    public WebDriver driver;
+  @Driver
+  public WebDriver driver;
 
-    @Test
-    public void selectCourseFromMenu() {
-        MainPage mainPage = new MainPage(driver).open();
+  @Test
+  public void selectCourseFromMenu() {
+    MainPage mainPage = new MainPage(driver).open();
 
-        mainPage.clickItemMenu("Специализация Java-разработчик");
+    mainPage.clickItemMenu("Специализация Java-разработчик");
 
-        mainPage.navigationBack();
+    mainPage.navigationBack();
 
-        mainPage.clickItemMenuDate(() ->
-                mainPage.getDateList()
-                        .stream()
-                        .min(Comparator.naturalOrder())
-                        .get());
+    mainPage.clickItemMenuDate(() ->
+        mainPage.getDateList()
+            .stream()
+            .min(Comparator.naturalOrder())
+            .get());
 
-        mainPage.navigationBack();
+    mainPage.navigationBack();
 
-        mainPage.clickItemMenuDate(() ->
-                mainPage.getDateList()
-                        .stream()
-                        .max(Comparator.naturalOrder())
-                        .get());
-    }
+    mainPage.clickItemMenuDate(() ->
+        mainPage.getDateList()
+            .stream()
+            .max(Comparator.naturalOrder())
+            .get());
+  }
 }

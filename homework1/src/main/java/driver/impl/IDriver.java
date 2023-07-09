@@ -10,41 +10,41 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public interface IDriver {
-    String REMOTE_URL = System.getProperty("webdriver.remote.url");
-    boolean HEADLESS = Boolean.valueOf(System.getProperty("webdriver.headless"));
+  String REMOTE_URL = System.getProperty("webdriver.remote.url");
+  boolean HEADLESS = Boolean.valueOf(System.getProperty("webdriver.headless"));
 
-    public WebDriver newDriver();
+  public WebDriver newDriver();
 
-    default URL getRemoteUrl() {
-        try {
-            return new URL(REMOTE_URL);
-        } catch (MalformedURLException e) {
-            return null;
-        }
+  default URL getRemoteUrl() {
+    try {
+      return new URL(REMOTE_URL);
+    } catch (MalformedURLException e) {
+      return null;
+    }
+  }
+
+  default void downloadLocalWebDriver(DriverManagerType driverType) throws DriverTypeNotSupported {
+    Config wdmConfig = WebDriverManager.globalConfig();
+    wdmConfig.setAvoidBrowserDetection(true);
+
+    String browserVersion = System.getProperty("browser.version", "");
+
+    if (!browserVersion.isEmpty()) {
+      switch (driverType) {
+        case CHROME:
+          wdmConfig.setChromeDriverVersion(browserVersion);
+          break;
+        case FIREFOX:
+          wdmConfig.setFirefoxVersion(browserVersion);
+          break;
+        case OPERA:
+          wdmConfig.setOperaVersion(browserVersion);
+          break;
+        default:
+          throw new DriverTypeNotSupported(driverType);
+      }
     }
 
-    default void downloadLocalWebDriver(DriverManagerType driverType) throws DriverTypeNotSupported {
-        Config wdmConfig = WebDriverManager.globalConfig();
-        wdmConfig.setAvoidBrowserDetection(true);
-
-        String browserVersion = System.getProperty("browser.version", "");
-
-        if (!browserVersion.isEmpty()) {
-            switch (driverType) {
-                case CHROME:
-                    wdmConfig.setChromeDriverVersion(browserVersion);
-                    break;
-                case FIREFOX:
-                    wdmConfig.setFirefoxVersion(browserVersion);
-                    break;
-                case OPERA:
-                    wdmConfig.setOperaVersion(browserVersion);
-                    break;
-                default:
-                    throw new DriverTypeNotSupported(driverType);
-            }
-        }
-
-        WebDriverManager.getInstance(driverType).setup();
-    }
+    WebDriverManager.getInstance(driverType).setup();
+  }
 }
