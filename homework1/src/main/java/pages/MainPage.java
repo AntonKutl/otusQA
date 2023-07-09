@@ -27,9 +27,6 @@ public class MainPage extends AnyPageAbs<MainPage> {
   @FindBy(xpath = "//a[contains(@href, 'https://otus.ru/lessons/')]//span[contains(., 'С')]")
   List<WebElement> dateItem;
 
-  @FindBy(css = ".lessons__new-item-start")
-  List<WebElement> dateItemStart;
-
   public MainPage clickItemMenu(String nameItem) {
     WebElement menuItemElement = driver.findElement(By.xpath(String.format(menuItemLocator, nameItem)));
     new Actions(driver).click(menuItemElement).perform();
