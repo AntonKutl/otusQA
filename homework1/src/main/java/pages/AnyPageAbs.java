@@ -33,7 +33,7 @@ public abstract class AnyPageAbs<T> extends AbsPageObject<T> {
 
   public <T> T page(Class<T> clazz) {
     try {
-      Constructor constructor = clazz.getConstructor(WebDriver.class);
+      Constructor<T> constructor = clazz.getConstructor(WebDriver.class);
 
       return convertInstanceOfObject(constructor.newInstance(driver), clazz);
 

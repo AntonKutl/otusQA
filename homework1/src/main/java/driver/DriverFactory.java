@@ -8,7 +8,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.Locale;
 
-public class DriverFactory{
+public class DriverFactory {
 
   public static EventFiringWebDriver newDriver() {
 

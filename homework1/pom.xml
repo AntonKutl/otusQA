@@ -17,7 +17,7 @@
         <allure.version>2.14.0</allure.version>
         <cucumber.version>7.2.3</cucumber.version>
 
-        <surefire.plugin.version>2.22.2</surefire.plugin.version>
+        <surefire.plugin.version>3.0.0-M7</surefire.plugin.version>
 
         <browser>chrome</browser>
         <webdriver.base.url>https://otus.ru</webdriver.base.url>
@@ -53,6 +53,11 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -82,6 +87,13 @@
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>5.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
