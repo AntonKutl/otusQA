@@ -26,30 +26,8 @@ public abstract class AnyPageAbs<T> extends AbsPageObject<T> {
     return "";
   }
 
-  public T open() {
+  public void open() {
     driver.get(baseUrl + getUrlPrefix());
-    return (T) page(getClass());
-  }
-
-  public <T> T page(Class<T> clazz) {
-    try {
-      Constructor<T> constructor = clazz.getConstructor(WebDriver.class);
-
-      return convertInstanceOfObject(constructor.newInstance(driver), clazz);
-
-    } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-      e.printStackTrace();
-    }
-
-    return null;
-  }
-
-  private static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
-    try {
-      return clazz.cast(o);
-    } catch (ClassCastException e) {
-      return null;
-    }
   }
 
   public void navigationBack() {
