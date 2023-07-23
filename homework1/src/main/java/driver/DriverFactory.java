@@ -8,13 +8,11 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.Locale;
 
-public class DriverFactory implements IDriverFactory {
+public class DriverFactory{
 
-  private String browserType = System.getProperty("browser").toLowerCase(Locale.ROOT);
+  public static EventFiringWebDriver newDriver() {
 
-  @Override
-  public EventFiringWebDriver getDriver() {
-    switch (this.browserType) {
+    switch (System.getProperty("browser", "chrome").toLowerCase(Locale.ROOT)) {
       case "chrome": {
         return new EventFiringWebDriver(new ChromeWebDriver().newDriver());
       }
@@ -26,7 +24,7 @@ public class DriverFactory implements IDriverFactory {
       }
       default:
         try {
-          throw new DriverTypeNotSupported(this.browserType);
+          throw new DriverTypeNotSupported(System.getProperty("browser", "chrome").toLowerCase(Locale.ROOT));
         } catch (DriverTypeNotSupported ex) {
           ex.printStackTrace();
           return null;

@@ -1,22 +1,21 @@
 package pages;
 
-import actions.CommonActions;
 import annotations.UrlPrefix;
-import org.apache.commons.lang3.StringUtils;
+import com.google.inject.Inject;
 import org.openqa.selenium.WebDriver;
+import pageobject.AbsPageObject;
+import support.GuiceScoped;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public abstract class AnyPageAbs<T> extends CommonActions<T> {
-
-  public AnyPageAbs(WebDriver driver) {
-    super(driver);
+public abstract class AnyPageAbs<T> extends AbsPageObject<T> {
+  @Inject
+  public AnyPageAbs(GuiceScoped guiceScoped) {
+    super(guiceScoped);
   }
 
-  private String getBaseUrl() {
-    return StringUtils.stripEnd(System.getProperty("webdriver.base.url"), "/");
-  }
+  private String baseUrl = System.getProperty("base.url", "https://otus.ru");
 
   private String getUrlPrefix() {
     UrlPrefix urlAnnotation = getClass().getAnnotation(UrlPrefix.class);
@@ -28,8 +27,7 @@ public abstract class AnyPageAbs<T> extends CommonActions<T> {
   }
 
   public T open() {
-    driver.get(getBaseUrl() + getUrlPrefix());
-
+    driver.get(baseUrl + getUrlPrefix());
     return (T) page(getClass());
   }
 
