@@ -1,6 +1,7 @@
 package org.example.steps;
 
 import static io.restassured.RestAssured.given;
+import static org.example.utils.ConfigurationService.getProperty;
 
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
@@ -9,14 +10,12 @@ import io.restassured.specification.RequestSpecification;
 import org.example.dto.UserDto;
 
 public class UserSteps {
-  private static final String BASE_URL = "https://petstore.swagger.io/v2";
-  private static final String ADD_PATH = "/user";
-  private RequestSpecification spec;
+  private final RequestSpecification spec;
 
   public UserSteps() {
     spec = given()
-        .baseUri(BASE_URL)
-        .basePath(ADD_PATH)
+        .baseUri(getProperty("base.url"))
+        .basePath(getProperty("add.path"))
         .contentType(ContentType.JSON);
   }
 
@@ -39,6 +38,18 @@ public class UserSteps {
         .log().all()
         .when()
         .get("{user}")
+        .then()
+        .log().all();
+  }
+
+  @Step("Получение пользователей {name}")
+  public ValidatableResponse deletedUser(String name) {
+    return given(spec)
+        .pathParam("user", name)
+        .accept("application/json")
+        .log().all()
+        .when()
+        .delete("{user}")
         .then()
         .log().all();
   }
