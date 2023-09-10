@@ -1,12 +1,13 @@
 package helper;
 
+import static io.restassured.RestAssured.given;
+import static stubs.util.ConfigurationService.getProperty;
+
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
-import static io.restassured.RestAssured.given;
-import static stubs.util.ConfigurationService.getProperty;
 
 public class APIHelper {
   private RequestSpecification spec;

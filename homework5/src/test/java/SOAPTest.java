@@ -1,34 +1,32 @@
+import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
+
 import helper.SOAPHelper;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 import stubs.Stubs;
 
-import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
-
 public class SOAPTest {
-  private final static Stubs soapStubs = new Stubs();
-  private final static SOAPHelper helper = new SOAPHelper();
+  private static Stubs soapStubs = new Stubs();
+  private static SOAPHelper helper = new SOAPHelper();
 
-  @BeforeAll
+  @BeforeClass
   public static void configureSystemUnderTest() {
     soapStubs.setUp()
         .stubForGetUserXML("user.xml")
         .status();
   }
 
-  @Test
-  @DisplayName("Проверка xml схемы score")
+  @Test(testName = "Проверка xml схемы score")
   public void checkScore() {
     ValidatableResponse users = helper.getScore("response/course.xml");
     users.statusCode(HttpStatus.SC_OK);
     users.body(matchesXsdInClasspath("schema/course.xsd"));
   }
 
-  @AfterAll
+  @AfterClass
   public static void stopTest() {
     soapStubs.stop();
   }

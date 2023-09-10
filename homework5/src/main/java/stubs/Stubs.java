@@ -1,10 +1,11 @@
 package stubs;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static stubs.util.ConfigurationService.getProperty;
 import static stubs.util.GetFile.readFile;
+
+import com.github.tomakehurst.wiremock.WireMockServer;
+
 
 
 public class Stubs {
